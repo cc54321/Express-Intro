@@ -182,3 +182,38 @@
 		- _Commentary_: When we save objects to a database (which we will eventually do), it is good practice to keep track of when a particular object was created and when it was last modified. In the case of creating a totally new object, we're setting both fields to be the current date and time.		
 	- Push the new movie object into the favoriteMovieList.
 	- Respond to the request at the end of the route with an ob...
+
+	app.put("/update-movie/:titleToUpdate", (req, res)=>{
+
+				const movieTitleToFind = req.params.titleToUpdate;
+
+				const originalMovie = favoriteMovieList.find((movie)=>{
+					return movie.title === movieTitleToFind;
+				})
+
+				const originalMovieIndex = favoriteMovieList.findIndex((movie)=>{
+					return movie.title === movieTitleToFind;
+				})
+
+				if (!originalMovie) {
+					res.json({
+						success: false;
+						message: "can't find movie not in list"
+					})
+					return;
+				}
+				// const updatedMovie = ()
+
+				// if (req.body.title !== undefined && typeof(req,body,title) ==="string")
+				//    {updatedMovie.Title =req.body.title
+				// }else {updatedMovie.title = originalMovie.starRating
+				// }
+
+				// if(req.body.starRating !== undefined && typeof(req.body.isRecommended) === "boolean")
+				// {updatedMovie.isRecommended = updatedMovie.isRecommended
+				// }
+				// favoriteMovieList[originalMovieIndex] = updatedMovie;
+
+				// res.json({
+				// 	success: true
+				// })

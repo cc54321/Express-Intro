@@ -84,16 +84,7 @@ const express = require('express')
 			//   	return date
 			//   }
 
-			 app.delete("/delete-movie/: titleToDelete", (req, res)=>{
-
-			 	const movieTitleToDelete = req.params.titleToDelete
-			
-			 	const indexOfmovie = favoriteMovieList.findIndex((movie)=>{
-					return movie.title === movieTitleToDelete
-			 	})
-			
-			 	favoriteMovieList.splice(indexOfMovie, 1)
-			})
+			 
 			  const newMovie = {}
 			  newMovie.movieTitle = req.body.movieTitle
 			  newMovie.starRating = req.body.starRating
@@ -112,7 +103,16 @@ const express = require('express')
 			 	})
 			 })
 		
-			
+			 app.delete("/delete-movie/: titleToDelete", (req, res)=>{
+
+				const movieTitleToDelete = req.params.titleToDelete
+		   
+				const indexOfmovie = favoriteMovieList.findIndex((movie)=>{
+				   return movie.title === movieTitleToDelete
+				})
+		   
+				favoriteMovieList.splice(indexOfMovie, 1)
+		   })
 
 		app.listen(port, () => {
 			console.log(`Example app listening on port ${port}`)

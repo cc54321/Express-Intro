@@ -90,6 +90,7 @@ const express = require('express')
 			  newMovie.starRating = req.body.starRating
 			  newMovie.isRecommended = req.body.isRecommended
 			  newMovie.createdAt = new Date()
+			  newMovie.lastModified = new Date()
 
 			  favoriteMovieList.push(newMovie)
 		
@@ -97,22 +98,62 @@ const express = require('express')
 			 	success: true
 			 })
 
-			
-			 	res.json({
-			 		success: true
-			 	})
+			 res.json({
+				success: true
+			})
+			 
+			 })
+
+			 app.put('update-movie/:titleToUpdate',(req,res)=>{
+				const titleToUpdate = req.params.titleToUpdate;
+				const originalMovieIndex = favoriteMovieList.findIndex(movie=> movie.title === titleToUpdate);
+				const originalMovie = favoriteMovieList[originalMovieIndex];
+				const updatedMovie = {};
+
+				if (req.body.title !== undefined){
+					updatedMovie.title = req.body.title;	
+				} else {
+					updatedMovie.title = originalMovie.title;
+				}
+				if (req.body.starRating !== undefined){
+					updatedMovie.starRating = req.body.starRating;
+				} else {
+					updatedMovie.starRating = originalMovie.starRating;
+				}
+
+				if (req.body.isRecommended !== undefined){
+					updatedMovie.isRecommended = originalMovie.isRecommended;
+				} else {
+					updatedMovie.isRecommended = originalMovie.isRecommended;
+				}
+
+				updatedMovie.createdAt = originalMovie.createdAt;
+				updatedMovie.lastModified = new Date();
+				
+				favoriteMovieList[originalMovieIndex] = updatedMovie;
+
+				res.json({
+					success: true
+				})
+
 			 })
 		
-			 app.delete("/delete-movie/: titleToDelete", (req, res)=>{
+			 app.delete("/delete-movie/:titleToDelete", (req, res)=>{
 
 				const movieTitleToDelete = req.params.titleToDelete
 		   
-				const indexOfmovie = favoriteMovieList.findIndex((movie)=>{
-				   return movie.title === movieTitleToDelete
+				const deleteMovieIndex = favoriteMovieList.findIndex(movie=> ovie.title === movieTitleToDelete);
+				favoriteMovieList.splice(indexOfMovie, 1)
+				})
+				res.json({
+					success: true
 				})
 		   
-				favoriteMovieList.splice(indexOfMovie, 1)
-		   })
+				
+		   
+		   
+		   
+			 
 
 		app.listen(port, () => {
 			console.log(`Example app listening on port ${port}`)
